@@ -9,9 +9,10 @@ def plot_loss(hard_thresholding_hist, nesterov_hist, sample_num):
     plt.plot(hard_thresholding_hist, label='Loss for hard thresholding algorithm')
     plt.plot(nesterov_hist, label="Nesterov's algorithm")  # TODO: change label
     plt.ylim(ymin=0)
+    # plt.yscale("log")
     plt.title(f'Loss for sample {sample_num}')
-    plt.ylabel('Loss')
-    plt.xlabel('Iterations')
+    plt.ylabel('Loss', fontsize=12)
+    plt.xlabel('Iteration', fontsize=12)
     plt.legend()
     plt.show()
 
@@ -24,16 +25,14 @@ def main():
     # plot_loss(hist, np.multiply(2 * hist, 2), 1)
 
     for i, (X, y) in enumerate(dataset_generator()):
-        print(f'X shape = {X.shape}, y shape = {y.shape}')
         init_beta = np.random.rand(X.shape[1])
-        init_beta = init_beta / np.linalg.norm(init_beta)
+        # init_beta = init_beta / np.linalg.norm(init_beta)
         L0_thresh = int(init_beta.shape[0]/2)
-        iter_limit = 1000
-        eps = 10000
-        # y = y[:, 0]  # TODO: remove this line after fix in generator
+        iter_limit = 100
+        eps = 0.001
         _, ith_hist = iterative_hard_thresholding(X, y, init_beta, L0_thresh, iter_limit, eps)
         #TODO: Call Nesterov's algorithm
-        nesterov_hist_mock = np.random.rand(len(ith_hist))
+        nesterov_hist_mock = np.random.rand(len(ith_hist)) * np.mean(ith_hist)
         plot_loss(ith_hist, nesterov_hist_mock, i + 1)
 
 

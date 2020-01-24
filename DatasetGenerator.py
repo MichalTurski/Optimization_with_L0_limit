@@ -5,6 +5,7 @@ def create_dataset(cov_matrix, beta, n=500, snr=1):
     p = cov_matrix.shape[0]
     mean = np.zeros(p)
     X = np.random.multivariate_normal(mean, cov_matrix, size=n)
+    X = X / np.linalg.norm(X)
     X_beta = np.matmul(X, beta)
     epsilon = np.random.normal(0, scale=np.sqrt(np.var(X_beta)/snr))
     y = X_beta + epsilon
@@ -16,7 +17,7 @@ def dataset_generator():
     # Set 1.
     p = 50
     k = 5
-    val = 1.5
+    val = 0.5
     cov_matrix = np.empty(shape=[p, p])
     for i in range(cov_matrix.shape[0]):
         for j in range(cov_matrix.shape[1]):
