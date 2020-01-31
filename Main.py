@@ -7,7 +7,7 @@ from DatasetGenerator import dataset_generator
 
 
 def plot_loss(hard_thresholding_hist, dfo_hist, dfo_mod_hist, sample_num):
-    plt.plot(hard_thresholding_hist, label='Loss for hard thresholding algorithm')
+    plt.plot(hard_thresholding_hist, label='Hard thresholding algorithm')
     plt.plot(dfo_hist, label="DFO algorithm")
     plt.plot(dfo_mod_hist, label="DFO modified algorithm")
     plt.ylim(ymin=0)
