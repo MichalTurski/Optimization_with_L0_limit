@@ -30,8 +30,8 @@ def main():
         init_beta = np.random.rand(X.shape[1])
         # init_beta = init_beta / np.linalg.norm(init_beta)
         L0_thresh = int(init_beta.shape[0]/2)
-        iter_limit = 100
-        eps = 0.001
+        iter_limit = 1000
+        eps = 0.0001
         _, ith_hist = iterative_hard_thresholding(X, y, init_beta, L0_thresh, iter_limit, eps)
         _, dfo_hist = discrete_first_order(X, y, init_beta, L0_thresh, iter_limit, eps)
         _, dfo_mod_hist = discrete_first_order_modified(X, y, init_beta, L0_thresh, iter_limit, eps)
