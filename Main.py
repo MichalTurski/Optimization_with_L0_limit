@@ -7,17 +7,28 @@ from Solvers.DiscreteFirstOrder import discrete_first_order, discrete_first_orde
 from DatasetGenerator import dataset_generator
 
 
-def plot_loss(hard_thresholding_hist, dfo_hist, dfo_mod_hist, sample_num):
-    plt.plot(hard_thresholding_hist, label='Hard thresholding algorithm')
-    plt.plot(dfo_hist, label="DFO algorithm")
-    plt.plot(dfo_mod_hist, label="DFO modified algorithm")
+def universal_line_plot(tile, x_label, y_label, x_offset, hard_thresholding, dfo, dfo_mod):
+    plt.plot(list(range(x_offset, len(hard_thresholding)+x_offset)), hard_thresholding,
+             label='Hard thresholding algorithm')
+    plt.plot(list(range(x_offset, len(dfo)+x_offset)), dfo, label="DFO algorithm")
+    plt.plot(list(range(x_offset, len(dfo_mod)+x_offset)), dfo_mod, label="DFO modified algorithm")
     plt.ylim(ymin=0)
     # plt.yscale("log")
-    plt.title(f'Loss for dataset {sample_num}')
-    plt.ylabel('Loss', fontsize=12)
-    plt.xlabel('Iteration', fontsize=12)
+    plt.title(tile)
+    plt.ylabel(y_label, fontsize=12)
+    plt.xlabel(x_label, fontsize=12)
     plt.legend()
     plt.show()
+
+
+def plot_loss(hard_thresholding_hist, dfo_hist, dfo_mod_hist, dataset_num):
+    universal_line_plot(f'Loss for dataset {dataset_num}', 'Iteration', 'Loss', 0,
+                        hard_thresholding_hist, dfo_hist, dfo_mod_hist)
+
+
+def plot_thresh_to_iters(hard_thresholding_iters, dfo_iters, dfo_mod_iters, dataset_num):
+    universal_line_plot(f'Iterations number as a threshold function for dataset {dataset_num}', 'Threshold',
+                        'Iterations', 1, hard_thresholding_iters, dfo_iters, dfo_mod_iters)
 
 
 def plot_losses():
@@ -32,15 +43,15 @@ def plot_losses():
         plot_loss(ith_hist, dfo_hist, dfo_mod_hist, i + 1)
 
 
-def plot_itrations():
+def plot_iterations():
     for i, (X, y) in enumerate(dataset_generator()):
-        init_beta = np.random.rand(X.shape[1])
         iter_limit = 1000
         eps = 0.0001
         ith_iters_list = []
         dfo_iters_list = []
         dfo_mod_iters_list = []
         for j in range(50):
+            init_beta = np.random.rand(X.shape[1])
             ith_iters = []
             dfo_iters = []
             dfo_mod_iters = []
@@ -61,10 +72,10 @@ def plot_itrations():
         dfo_iters = dfo_iters_df.mean().tolist()
         dfo_mod_iters = dfo_mod_iters_df.mean().tolist()
 
-        plot_loss(ith_iters, dfo_iters, dfo_mod_iters, i + 1)
+        plot_thresh_to_iters(ith_iters, dfo_iters, dfo_mod_iters, i + 1)
 
 
 if __name__ == "__main__":
     # plot_losses()
-    plot_itrations()
+    plot_iterations()
 

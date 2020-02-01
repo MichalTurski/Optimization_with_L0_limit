@@ -12,6 +12,6 @@ def iterative_hard_thresholding(X, y, beta_init, dim_thresh, iter_limit, eps):
         diff = y - np.dot(X, beta)
         loss = square_euclidean(diff)
         loss_hist.append(loss)
-        if loss_hist[-2] - loss < eps and i > 5:
+        if loss_hist[-2] - loss < eps and i > 2:
             break
     return beta, loss_hist

@@ -16,7 +16,7 @@ def discrete_first_order_modified(X, y, beta_init, dim_thresh, iter_limit, eps, 
         diff = y - np.dot(X, beta)
         loss = square_euclidean(diff)
         loss_hist.append(loss)
-        if loss_hist[-2] - loss < eps and i > 5:
+        if loss_hist[-2] - loss < eps and i > 2:
             break
     return beta, loss_hist
 
@@ -32,7 +32,7 @@ def discrete_first_order(X, y, beta_init, dim_thresh, iter_limit, eps, l_gain=10
         diff = y - np.dot(X, beta)
         loss = square_euclidean(diff)
         loss_hist.append(loss)
-        if loss_hist[-2] - loss < eps and i > 5:
+        if loss_hist[-2] - loss < eps and i > 2:
             break
     return beta, loss_hist
 
