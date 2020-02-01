@@ -75,7 +75,44 @@ def plot_iterations():
         plot_thresh_to_iters(ith_iters, dfo_iters, dfo_mod_iters, i + 1)
 
 
+def coefs_barplot(ith_coefs, dfo_coefs, dfo_mod_coefs, dataset_num):
+    x = np.arange(len(ith_coefs))  # the label locations
+    width = 0.9  # the width of the bars
+
+    my_dpi = 96
+    fig, ax = plt.subplots(figsize=(1200 / my_dpi, 600 / my_dpi), dpi=my_dpi)
+    rects1 = ax.bar(x - width / 3, ith_coefs, width/3, label='Hard thresholding algorithm')
+    rects2 = ax.bar(x, dfo_coefs, width/3, label='DFO algorithm')
+    rects3 = ax.bar(x + width / 3, dfo_mod_coefs, width/3, label='DFO modified algorithm')
+
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel('Coefficient value', fontsize=12)
+    ax.set_xlabel('Coefficient number', fontsize=12)
+    ax.set_title(f'Coefficients comparison for dataset {dataset_num}')
+    ax.set_xticks(np.arange(0, len(ith_coefs), 5))
+    # ax.set_xticklabels(labels)
+    ax.legend()
+    plt.axhline(0, color='k', linewidth=0.5)
+
+    fig.tight_layout()
+    # plt.savefig('my_fig.png', dpi=my_dpi)
+    plt.show()
+    pass
+
+
+def plot_coefficients():
+    for i, (X, y) in enumerate(dataset_generator()):
+        init_beta = np.random.rand(X.shape[1])
+        L0_thresh = int(init_beta.shape[0]/2)
+        iter_limit = 1000
+        eps = 0.0001
+        ith_coefs,  _ = iterative_hard_thresholding(X, y, init_beta, L0_thresh, iter_limit, eps)
+        dfo_coefs, _ = discrete_first_order(X, y, init_beta, L0_thresh, iter_limit, eps)
+        dfo_mod_coefs, _ = discrete_first_order_modified(X, y, init_beta, L0_thresh, iter_limit, eps)
+        coefs_barplot(ith_coefs, dfo_coefs, dfo_mod_coefs, i + 1)
+
+
 if __name__ == "__main__":
     # plot_losses()
-    plot_iterations()
-
+    # plot_iterations()
+    plot_coefficients()
