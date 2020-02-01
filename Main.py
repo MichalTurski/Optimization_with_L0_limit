@@ -8,6 +8,8 @@ from DatasetGenerator import dataset_generator
 
 
 def universal_line_plot(tile, x_label, y_label, x_offset, hard_thresholding, dfo, dfo_mod):
+    my_dpi = 96
+    plt.figure(figsize=(800 / my_dpi, 600 / my_dpi), dpi=my_dpi)
     plt.plot(list(range(x_offset, len(hard_thresholding)+x_offset)), hard_thresholding,
              label='Hard thresholding algorithm')
     plt.plot(list(range(x_offset, len(dfo)+x_offset)), dfo, label="DFO algorithm")
@@ -113,6 +115,6 @@ def plot_coefficients():
 
 
 if __name__ == "__main__":
-    # plot_losses()
+    plot_losses()
     # plot_iterations()
-    plot_coefficients()
+    # plot_coefficients()
