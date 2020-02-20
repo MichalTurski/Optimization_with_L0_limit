@@ -5,7 +5,7 @@ def square_euclidean(vec):
 
 def H_operator(vec, dim_thresh):
     #  Select dim_thresh largest elements of vec
-    order = np.argsort(-vec)  # "-" because argsort sorts in ascending order
+    order = np.argsort(-np.abs(vec))  # "-" because argsort sorts in ascending order
     res = np.zeros_like(vec)
     for i in range(dim_thresh):
         curr_idx = order[i]
