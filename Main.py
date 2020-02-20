@@ -20,6 +20,7 @@ def universal_line_plot(tile, x_label, y_label, x_offset, hard_thresholding, dfo
     plt.ylabel(y_label, fontsize=12)
     plt.xlabel(x_label, fontsize=12)
     plt.legend()
+    plt.tight_layout()
     plt.show()
 
 
@@ -52,7 +53,7 @@ def plot_iterations():
         ith_iters_list = []
         dfo_iters_list = []
         dfo_mod_iters_list = []
-        for j in range(50):
+        for j in range(200):
             init_beta = np.random.rand(X.shape[1])
             ith_iters = []
             dfo_iters = []
